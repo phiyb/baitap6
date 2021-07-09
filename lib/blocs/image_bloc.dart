@@ -30,6 +30,8 @@ class ImageBloc {
     Map<String, String> headers = new Map<String, String>();
     headers["Authorization"] = "Bearer ${token}";
     print(image.path.toString());
+    Map<String,String> pa=new Map<String,String>();
+    pa["file"]=image.path.toString();
     await apiService.postImage(
         onSuccess: (data) {
           print(data.path);
@@ -41,7 +43,7 @@ class ImageBloc {
           userBloc.updateUser(user);
         },
         onFailure: (error) {},
-        pa: image.path.toString(),
+        pa: pa,
         paths: '/api/upload',
         headers: headers);
   }

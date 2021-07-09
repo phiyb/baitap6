@@ -3,6 +3,7 @@ import 'package:baitap6/model/user_model.dart';
 import 'package:baitap6/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lottie/lottie.dart';
 import 'system.dart';
 import 'color.dart';
 
@@ -177,8 +178,9 @@ class _LoginScreenState extends State<LoginScreen> {
           onPressed: () async {
             //   UserModel u= await UserBloc().login(controllerEmail.text, controllerPass.text) ;
 
-            widget.userBloc
+           await widget.userBloc
                 .login(controllerEmail.text, controllerPass.text, context);
+
           },
           child: Text(
             "Login",

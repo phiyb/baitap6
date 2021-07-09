@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/src/material/date_picker.dart';
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
@@ -21,199 +22,183 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   File? image;
   var bloc = new ImageBloc();
-
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   UserModel u = UserBloc.u;
-  //   print("avatar   ${u.avatar}");
-  //
-  //   super.initState();
-  // }
-
-  // @override
-  // void didChangeDependencies() async{
-  //   // TODO: implement didChangeDependencies
-  //   Stream<UserModel> ui=UserBloc.stream;
-  //   UserModel i=await ui.first;
-  //   int a=9;
-  //   super.didChangeDependencies();
-  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text("Profile"),
-      ),
-      body: Container(
-        height: double.infinity,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.all(10),
-                width: double.infinity,
-                height: 150,
-                color: Colors.white,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 110,
-                      height: 110,
-                      child: Stack(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Container(
-                              color: Colors.red,
-                              width: 100,
-                              height: 100,
-                              child: StreamBuilder<UserModel>(
-                                stream: userBloc.stream,
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    // return Text("${baseUrl}${snapshot.data!.avatar}");
-                                    return FadeInImage.assetNetwork(
-                                      placeholder: "assets/loading.gif",
-                                      image:
-                                      "${baseUrl}${snapshot.data!.avatar}",
-                                      fit: BoxFit.fill,
-                                    ) ??
-                                        Container();
-                                  } else
-                                    return Lottie.asset("assets/jsonload.json");
-                                },
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                              top: 60,
-                              right: 0,
-                              child: GestureDetector(
-                                onTap: () {
-                                  // selectPhoto();
-                                  print("d");
-                                  showModalBottomSheet(
-                                      context: context,
-                                      builder: (context) {
-                                        return Container(
-                                          margin: EdgeInsets.only(top: 20),
-                                          child: Column(
-                                            children: [
-                                              ListTile(
-                                                trailing: Icon(Icons.image),
-                                                title: Text("Chọn ảnh từ thư viện"),
-                                                onTap: () {
-                                                  print("chọn ảnh");
-                                                  selectPhoto(true);
-                                                },
-                                              ),
-                                              ListTile(
-                                                trailing:
-                                                Icon(Icons.camera_alt_outlined),
-                                                title: Text("Chụp ảnh mới"),
-                                                onTap: () {
-                                                  print("chụp ảnh");
-                                                  selectPhoto(false);
-                                                },
-                                              ),
-                                              ListTile(
-                                                trailing: Icon(Icons.cancel),
-                                                title: Text("Cancel"),
-                                                onTap: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      });
-                                },
-                                behavior: HitTestBehavior.translucent,
-                                child: Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                      color: Colors.black45,
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: Icon(
-                                    Icons.camera_alt_outlined,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ))
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(left: 15, top: 10),
-                          child: StreamBuilder<UserModel>(
-                              stream: userBloc.stream,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData)
-                                  return Column(
-                                    children: [
-                                      Text(
-                                        "${snapshot.data!.name}",
-                                        style: TextStyle(
-                                            fontSize: 22, fontWeight: FontWeight.w700),
-                                      ),
-                                      Text("${snapshot.data!.dateOfBirth}")
-                                    ],
-                                  );
-                                else
-                                  return Container(
-                                    child: Text("Rong"),
-                                  );
-                              }),
-                        ))
-                  ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    TextField(
-                      decoration: InputDecoration(
-                          hintText: "Nhập email",
-                          labelText: "Email",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)
-                          )
-                      ),
-                    ),
-                    SizedBox(height:16 ,),
-                    TextField(
-                      decoration: InputDecoration(
-                          hintText: "Nhập địa chỉ",
-                          labelText: "Địa chỉ",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)
-                          )
-                      ),
-                    ),
-                   ElevatedButton(onPressed: () async {
-                     DateTime? pic = await showDatePicker(
-                       context: context,
-                       initialDate: DateTime.now(),
-                       firstDate: DateTime(2000),
-                       lastDate: DateTime(2025),
-                     );
-                   }, child: Text("Chọn ngày"))
-
-                  ],
-                ),
-
-              )
-            ],
-          ),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text("Profile"),
         ),
-      )
+        body: Column(
+          children: [
+            StreamBuilder<UserModel>(
+                stream: userBloc.stream,
+                builder: (context,snapshot){
+                   if(snapshot.hasData){
+                     return Container(
+                       margin: EdgeInsets.all(10),
+                       width: double.infinity,
+                       height: 150,
+                       color: Colors.white,
+                       child: Row(
+                         mainAxisAlignment: MainAxisAlignment.start,
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: [
+                           Container(
+                             width: 110,
+                             height: 110,
+                             child: Stack(
+                               children: [
+                                 ClipRRect(
+                                   borderRadius: BorderRadius.circular(100),
+                                   child: Container(
+                                     color: Colors.redAccent[100],
+                                     width: 100,
+                                     height: 100,
+                                     child:  FadeInImage.assetNetwork(
+                                             placeholder: "assets/loading.gif",
+                                             image:
+                                             "${baseUrl}${snapshot.data!.avatar}",
+                                             fit: BoxFit.fill,
+                                           ) ?? Container()
+
+
+
+
+                                   ),
+                                 ),
+                                 Positioned(
+                                     top: 60,
+                                     right: 0,
+                                     child: GestureDetector(
+                                       onTap: () {
+                                         // selectPhoto();
+                                         print("d");
+                                         showModalBottomSheet(
+                                             context: context,
+                                             builder: (context) {
+                                               return Container(
+                                                 margin: EdgeInsets.only(top: 20),
+                                                 child: Column(
+                                                   children: [
+                                                     ListTile(
+                                                       trailing: Icon(Icons.image),
+                                                       title: Text(
+                                                           "Chọn ảnh từ thư viện"),
+                                                       onTap: () {
+                                                         print("chọn ảnh");
+                                                         selectPhoto(true);
+                                                       },
+                                                     ),
+                                                     ListTile(
+                                                       trailing: Icon(Icons
+                                                           .camera_alt_outlined),
+                                                       title: Text("Chụp ảnh mới"),
+                                                       onTap: () {
+                                                         print("chụp ảnh");
+                                                         selectPhoto(false);
+                                                       },
+                                                     ),
+                                                     ListTile(
+                                                       trailing: Icon(Icons.cancel),
+                                                       title: Text("Cancel"),
+                                                       onTap: () {
+                                                         Navigator.of(context).pop();
+                                                       },
+                                                     ),
+                                                   ],
+                                                 ),
+                                               );
+                                             });
+                                       },
+                                       behavior: HitTestBehavior.translucent,
+                                       child: Container(
+                                         width: 40,
+                                         height: 40,
+                                         decoration: BoxDecoration(
+                                             color: Colors.black45,
+                                             borderRadius:
+                                             BorderRadius.circular(20)),
+                                         child: Icon(
+                                           Icons.camera_alt_outlined,
+                                           color: Colors.white,
+                                         ),
+                                       ),
+                                     ))
+                               ],
+                             ),
+                           ),
+                           Expanded(
+                               child: Container(
+                                 margin: EdgeInsets.only(left: 15, top: 10),
+                                 child:Column(
+                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                   children: [
+                                     Text(
+                                       "${snapshot.data!.name}",
+                                       style: TextStyle(
+                                           fontSize: 22,
+                                           fontWeight: FontWeight.w700),
+                                     ),
+                                     SizedBox(
+                                       height: 10,
+                                     ),
+                                     Text(
+                                       "Ngày sinh: ${snapshot.data!.dateOfBirth}",
+                                       style: TextStyle(
+                                         color: Colors.black,
+                                       ),
+                                     ),
+                                     SizedBox(
+                                       height: 3,
+                                     ),
+                                     Text(
+                                       "Email: ${snapshot.data!.email}",
+                                       style: TextStyle(color: Colors.black),
+                                     ),
+                                     SizedBox(
+                                       height: 3,
+                                     ),
+                                     Text(
+                                       "Địa chỉ: ${snapshot.data!.address}",
+                                       style: TextStyle(color: Colors.black),
+                                     )
+                                   ],
+                                 ),
+                               ))
+                         ],
+                       ),
+                     );
+                   }
+                   else return Lottie.asset("assets/cat.json");
+
+            })
+            // GestureDetector(
+            //     behavior: HitTestBehavior.translucent,
+            //     onTap: () {},
+            //     child: Center(
+            //       child: Container(
+            //         width: 250,
+            //         height: 40,
+            //         decoration: BoxDecoration(
+            //             borderRadius: BorderRadius.circular(10),
+            //             color: Colors.white,
+            //             boxShadow: [
+            //               BoxShadow(color: Colors.black54, blurRadius: 1)
+            //             ]),
+            //         child: Center(
+            //           child: Text(
+            //             "Chỉnh sửa thông tin ",
+            //             style: TextStyle(
+            //                 color: Colors.blue,
+            //                 fontWeight: FontWeight.w700,
+            //                 fontSize: 17),
+            //           ),
+            //         ),
+            //       ),
+            //     ))
+          ],
+        )
     );
   }
 
@@ -231,10 +216,96 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (pickedFile != null) {
       image = File(pickedFile.path);
       print("name image: " + image!.path.toString());
-      bloc.postImage(image!, userBloc.u.token.toString());
+      // bloc.postImage(image!, userBloc.u.token.toString());
     } else {
       print("ImageScreenState select phôt fail");
     }
     Navigator.of(context).pop();
+    showDialog(
+        context: context,
+        builder: (context) {
+          return SimpleDialog(
+            children: [
+              Center(
+                child: Text(
+                  "Xem trước",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: 200,
+                width: 200,
+                child: Image.file(image!),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () {
+                        bloc.postImage(image!, userBloc.u.token.toString());
+                        Navigator.of(context).pop();
+                      },
+                      child: Center(
+                        child: Container(
+                          width: 100,
+                          height: 40,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.blue,
+                              boxShadow: [
+                                BoxShadow(color: Colors.black54, blurRadius: 1)
+                              ]),
+                          child: Center(
+                            child: Text(
+                              "Xác nhận",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 17),
+                            ),
+                          ),
+                        ),
+                      )),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Center(
+                        child: Container(
+                          width: 100,
+                          height: 40,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.red,
+                              boxShadow: [
+                                BoxShadow(color: Colors.black54, blurRadius: 1)
+                              ]),
+                          child: Center(
+                            child: Text(
+                              "Hủy",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 17),
+                            ),
+                          ),
+                        ),
+                      ))
+                ],
+              )
+            ],
+          );
+        });
   }
 }

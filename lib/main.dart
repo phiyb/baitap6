@@ -1,3 +1,4 @@
+import 'package:baitap6/screens/loading.dart';
 import 'package:baitap6/screens/login.dart';
 import 'package:baitap6/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        "/profilescreen":(context)=>ProfileScreen()
+        "/profilescreen":(context)=>ProfileScreen(),
+        "/loading":(context)=>Loading(),
+
       },
       home: LoginScreen(),
     );

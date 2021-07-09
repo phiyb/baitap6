@@ -10,12 +10,12 @@ extension ImageService on ApiService {
   Future<void> postImage({
     required String paths,
     required Function(ImageModel) onSuccess,
-    required dynamic pa,
+    required Map<String,String> pa,
     required Function(String) onFailure,
     required Map<String,String> headers
   }) async {
 
-   await request(
+   await requestS(
       path: paths,
       method: Method.post,
       parameters: pa,
