@@ -22,6 +22,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   File? image;
   var bloc = new ImageBloc();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,146 +34,146 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             StreamBuilder<UserModel>(
                 stream: userBloc.stream,
-                builder: (context,snapshot){
-                   if(snapshot.hasData){
-                     return Container(
-                       margin: EdgeInsets.all(10),
-                       width: double.infinity,
-                       height: 150,
-                       color: Colors.white,
-                       child: Row(
-                         mainAxisAlignment: MainAxisAlignment.start,
-                         crossAxisAlignment: CrossAxisAlignment.start,
-                         children: [
-                           Container(
-                             width: 110,
-                             height: 110,
-                             child: Stack(
-                               children: [
-                                 ClipRRect(
-                                   borderRadius: BorderRadius.circular(100),
-                                   child: Container(
-                                     color: Colors.redAccent[100],
-                                     width: 100,
-                                     height: 100,
-                                     child:  FadeInImage.assetNetwork(
-                                             placeholder: "assets/loading.gif",
-                                             image:
-                                             "${baseUrl}${snapshot.data!.avatar}",
-                                             fit: BoxFit.fill,
-                                           ) ?? Container()
-
-
-
-
-                                   ),
-                                 ),
-                                 Positioned(
-                                     top: 60,
-                                     right: 0,
-                                     child: GestureDetector(
-                                       onTap: () {
-                                         // selectPhoto();
-                                         print("d");
-                                         showModalBottomSheet(
-                                             context: context,
-                                             builder: (context) {
-                                               return Container(
-                                                 margin: EdgeInsets.only(top: 20),
-                                                 child: Column(
-                                                   children: [
-                                                     ListTile(
-                                                       trailing: Icon(Icons.image),
-                                                       title: Text(
-                                                           "Chọn ảnh từ thư viện"),
-                                                       onTap: () {
-                                                         print("chọn ảnh");
-                                                         selectPhoto(true);
-                                                       },
-                                                     ),
-                                                     ListTile(
-                                                       trailing: Icon(Icons
-                                                           .camera_alt_outlined),
-                                                       title: Text("Chụp ảnh mới"),
-                                                       onTap: () {
-                                                         print("chụp ảnh");
-                                                         selectPhoto(false);
-                                                       },
-                                                     ),
-                                                     ListTile(
-                                                       trailing: Icon(Icons.cancel),
-                                                       title: Text("Cancel"),
-                                                       onTap: () {
-                                                         Navigator.of(context).pop();
-                                                       },
-                                                     ),
-                                                   ],
-                                                 ),
-                                               );
-                                             });
-                                       },
-                                       behavior: HitTestBehavior.translucent,
-                                       child: Container(
-                                         width: 40,
-                                         height: 40,
-                                         decoration: BoxDecoration(
-                                             color: Colors.black45,
-                                             borderRadius:
-                                             BorderRadius.circular(20)),
-                                         child: Icon(
-                                           Icons.camera_alt_outlined,
-                                           color: Colors.white,
-                                         ),
-                                       ),
-                                     ))
-                               ],
-                             ),
-                           ),
-                           Expanded(
-                               child: Container(
-                                 margin: EdgeInsets.only(left: 15, top: 10),
-                                 child:Column(
-                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                   children: [
-                                     Text(
-                                       "${snapshot.data!.name}",
-                                       style: TextStyle(
-                                           fontSize: 22,
-                                           fontWeight: FontWeight.w700),
-                                     ),
-                                     SizedBox(
-                                       height: 10,
-                                     ),
-                                     Text(
-                                       "Ngày sinh: ${snapshot.data!.dateOfBirth}",
-                                       style: TextStyle(
-                                         color: Colors.black,
-                                       ),
-                                     ),
-                                     SizedBox(
-                                       height: 3,
-                                     ),
-                                     Text(
-                                       "Email: ${snapshot.data!.email}",
-                                       style: TextStyle(color: Colors.black),
-                                     ),
-                                     SizedBox(
-                                       height: 3,
-                                     ),
-                                     Text(
-                                       "Địa chỉ: ${snapshot.data!.address}",
-                                       style: TextStyle(color: Colors.black),
-                                     )
-                                   ],
-                                 ),
-                               ))
-                         ],
-                       ),
-                     );
-                   }
-                   else return Lottie.asset("assets/cat.json");
-
-            })
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Container(
+                      margin: EdgeInsets.all(10),
+                      width: double.infinity,
+                      height: 150,
+                      color: Colors.white,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 110,
+                            height: 110,
+                            child: Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: Container(
+                                      color: Colors.redAccent[100],
+                                      width: 100,
+                                      height: 100,
+                                      child: FadeInImage.assetNetwork(
+                                            placeholder: "assets/loading.gif",
+                                            image:
+                                                "${baseUrl}${snapshot.data!.avatar}",
+                                            fit: BoxFit.fill,
+                                          ) ??
+                                          Container()),
+                                ),
+                                Positioned(
+                                    top: 60,
+                                    right: 0,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        // selectPhoto();
+                                        print("d");
+                                        showModalBottomSheet(
+                                            context: context,
+                                            builder: (context) {
+                                              return Container(
+                                                margin:
+                                                    EdgeInsets.only(top: 20),
+                                                child: Column(
+                                                  children: [
+                                                    ListTile(
+                                                      trailing:
+                                                          Icon(Icons.image),
+                                                      title: Text(
+                                                          "Chọn ảnh từ thư viện"),
+                                                      onTap: () {
+                                                        print("chọn ảnh");
+                                                        selectPhoto(true);
+                                                      },
+                                                    ),
+                                                    ListTile(
+                                                      trailing: Icon(Icons
+                                                          .camera_alt_outlined),
+                                                      title:
+                                                          Text("Chụp ảnh mới"),
+                                                      onTap: () {
+                                                        print("chụp ảnh");
+                                                        selectPhoto(false);
+                                                      },
+                                                    ),
+                                                    ListTile(
+                                                      trailing:
+                                                          Icon(Icons.cancel),
+                                                      title: Text("Cancel"),
+                                                      onTap: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            });
+                                      },
+                                      behavior: HitTestBehavior.translucent,
+                                      child: Container(
+                                        width: 40,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                            color: Colors.black45,
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        child: Icon(
+                                          Icons.camera_alt_outlined,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ))
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                              child: Container(
+                            margin: EdgeInsets.only(left: 15, top: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${snapshot.data!.name}",
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "Ngày sinh: ${snapshot.data!.dateOfBirth}",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 3,
+                                ),
+                                Text(
+                                  "Email: ${snapshot.data!.email}",
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                SizedBox(
+                                  height: 3,
+                                ),
+                                Text(
+                                  "Địa chỉ: ${snapshot.data!.address}",
+                                  style: TextStyle(color: Colors.black),
+                                )
+                              ],
+                            ),
+                          ))
+                        ],
+                      ),
+                    );
+                  } else
+                    return Lottie.asset("assets/cat.json");
+                })
             // GestureDetector(
             //     behavior: HitTestBehavior.translucent,
             //     onTap: () {},
@@ -198,8 +199,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             //       ),
             //     ))
           ],
-        )
-    );
+        ));
   }
 
   final picker = ImagePicker();
